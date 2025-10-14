@@ -1,0 +1,94 @@
+name: Voice Kit CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  release:
+    types: [created]
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm test
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: [test]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Build package
+        run: npm run build
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 1
+
+  publish:
+    name: Publish @thinkata/voice-kit to NPM
+    runs-on: ubuntu-latest
+    needs: [build]
+    if: (github.event_name == 'release') || (github.event_name == 'workflow_dispatch')
+    environment: prod
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: 'https://registry.npmjs.org'
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - name: Check if version already published
+        id: check-version
+        continue-on-error: true
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "Checking if @thinkata/voice-kit@$VERSION exists..."
+          RESULT=$(npm view @thinkata/voice-kit@$VERSION version --registry https://registry.npmjs.org 2>/dev/null || echo "")
+          if [ "$RESULT" = "$VERSION" ]; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+            echo "✅ Version $VERSION already published, skipping"
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+            echo "📦 Version $VERSION not published yet, proceeding"
+          fi
+          exit 0
+      - name: Publish to NPM
+        if: steps.check-version.outputs.skip != 'true'
+        run: npm publish --access public --ignore-scripts
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

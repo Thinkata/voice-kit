@@ -1,0 +1,92 @@
+{
+  "name": "@thinkata/voice-kit",
+  "version": "0.0.3",
+  "description": "Complete voice-powered application toolkit - Speech-to-text, AI form filling, and serverless API handlers",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.esm.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js"
+    },
+    "./components/VoiceInput.vue": "./dist/components/VoiceInput.vue",
+    "./components/SimpleFormExample.vue": "./dist/components/SimpleFormExample.vue"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "echo 'Linting not configured yet'",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "voice",
+    "speech-to-text",
+    "stt",
+    "audio",
+    "microphone",
+    "form-filling",
+    "llm",
+    "ai",
+    "accessibility",
+    "voice-input",
+    "form-automation",
+    "server",
+    "api",
+    "rate-limiting",
+    "nitro",
+    "h3",
+    "serverless",
+    "nuxt",
+    "elevenlabs",
+    "openai",
+    "together",
+    "cloudflare",
+    "vercel"
+  ],
+  "author": "Mark Williams",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Thinkata/voice-kit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Thinkata/voice-kit/issues"
+  },
+  "homepage": "https://github.com/Thinkata/voice-kit#readme",
+  "dependencies": {
+    "h3": "^1.13.0",
+    "tslib": "^2.8.1"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "vue": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.5",
+    "@types/jest": "^29.5.8",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "@vue/compiler-sfc": "^3.5.22",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^30.2.0",
+    "rollup": "^4.9.1",
+    "rollup-plugin-copy": "^3.5.0",
+    "rollup-plugin-vue": "^6.0.0",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.3.3",
+    "vue": "^3.5.0"
+  }
+}
