@@ -475,10 +475,34 @@ const mergeDataToForm = (data) => {
     }
     
     if (data.productCategory && (!formData.productCategory || data.productCategory.length > formData.productCategory.length)) {
-      formData.productCategory = data.productCategory
+      // Normalize category to match dropdown values
+      const categoryMapping = {
+        'electronics': 'electronics',
+        'electronic': 'electronics',
+        'electronic devices': 'electronics',
+        'clothing': 'clothing',
+        'clothes': 'clothing',
+        'apparel': 'clothing',
+        'books': 'books',
+        'book': 'books',
+        'home': 'home',
+        'home & garden': 'home',
+        'sports': 'sports',
+        'sport': 'sports',
+        'sports & outdoors': 'sports',
+        'beauty': 'beauty',
+        'beauty & health': 'beauty',
+        'health': 'beauty',
+        'automotive': 'automotive',
+        'auto': 'automotive',
+        'car': 'automotive'
+      }
+      
+      const normalizedCategory = categoryMapping[data.productCategory.toLowerCase()] || data.productCategory.toLowerCase()
+      formData.productCategory = normalizedCategory
       highlightedFields.productCategory = true
       fieldsUpdated++
-      console.log('Updated productCategory:', data.productCategory)
+      console.log('Updated productCategory:', normalizedCategory)
     }
     
     if (data.purchaseDate && (!formData.purchaseDate || data.purchaseDate.length > formData.purchaseDate.length)) {
@@ -489,10 +513,30 @@ const mergeDataToForm = (data) => {
     }
     
     if (data.rating && (!formData.rating || data.rating.length > formData.rating.length)) {
-      formData.rating = data.rating
+      // Normalize rating to match dropdown values
+      const ratingMapping = {
+        '5 - excellent': '5',
+        '5 - very good': '5',
+        '5': '5',
+        '4 - very good': '4',
+        '4 - good': '4',
+        '4': '4',
+        '3 - good': '3',
+        '3 - average': '3',
+        '3': '3',
+        '2 - fair': '2',
+        '2 - poor': '2',
+        '2': '2',
+        '1 - poor': '1',
+        '1 - bad': '1',
+        '1': '1'
+      }
+      
+      const normalizedRating = ratingMapping[data.rating.toLowerCase()] || data.rating
+      formData.rating = normalizedRating
       highlightedFields.rating = true
       fieldsUpdated++
-      console.log('Updated rating:', data.rating)
+      console.log('Updated rating:', normalizedRating)
     }
     
     if (data.feedback && (!formData.feedback || data.feedback.length > formData.feedback.length)) {
@@ -503,17 +547,59 @@ const mergeDataToForm = (data) => {
     }
     
     if (data.recommendation && (!formData.recommendation || data.recommendation.length > formData.recommendation.length)) {
-      formData.recommendation = data.recommendation
+      // Normalize recommendation to match dropdown values
+      const recommendationMapping = {
+        'yes': 'yes',
+        'yes definitely': 'yes',
+        'yes, definitely': 'yes',
+        'definitely': 'yes',
+        'absolutely': 'yes',
+        'maybe': 'maybe',
+        'perhaps': 'maybe',
+        'possibly': 'maybe',
+        'no': 'no',
+        'no probably not': 'no',
+        'no, probably not': 'no',
+        'probably not': 'no',
+        'definitely not': 'no'
+      }
+      
+      const normalizedRecommendation = recommendationMapping[data.recommendation.toLowerCase()] || data.recommendation.toLowerCase()
+      formData.recommendation = normalizedRecommendation
       highlightedFields.recommendation = true
       fieldsUpdated++
-      console.log('Updated recommendation:', data.recommendation)
+      console.log('Updated recommendation:', normalizedRecommendation)
     }
     
     if (data.priceRange && (!formData.priceRange || data.priceRange.length > formData.priceRange.length)) {
-      formData.priceRange = data.priceRange
+      // Normalize price range to match dropdown values
+      const priceRangeMapping = {
+        'under $50': 'under-50',
+        'under 50': 'under-50',
+        'less than $50': 'under-50',
+        'fifty-four dollars': '50-100',
+        '54 dollars': '50-100',
+        '$54': '50-100',
+        'fifty four': '50-100',
+        '$50 - $100': '50-100',
+        '50 - 100': '50-100',
+        'fifty to one hundred': '50-100',
+        '$100 - $500': '100-500',
+        '100 - 500': '100-500',
+        'one hundred to five hundred': '100-500',
+        '$500 - $1,000': '500-1000',
+        '500 - 1000': '500-1000',
+        'five hundred to one thousand': '500-1000',
+        'over $1,000': 'over-1000',
+        'over 1000': 'over-1000',
+        'more than $1,000': 'over-1000'
+      }
+      
+      const normalizedPriceRange = priceRangeMapping[data.priceRange.toLowerCase()] || data.priceRange.toLowerCase()
+      formData.priceRange = normalizedPriceRange
       highlightedFields.priceRange = true
       fieldsUpdated++
-      console.log('Updated priceRange:', data.priceRange)
+      console.log('Updated priceRange:', normalizedPriceRange)
     }
     
     if (data.improvements && (!formData.improvements || data.improvements.length > formData.improvements.length)) {
@@ -534,10 +620,26 @@ const mergeDataToForm = (data) => {
     }
     
     if (data.newsletter && !formData.newsletter) {
-      formData.newsletter = data.newsletter
+      // Normalize newsletter to match dropdown values
+      const newsletterMapping = {
+        'yes': 'yes',
+        'yes keep me updated': 'yes',
+        'yes, keep me updated': 'yes',
+        'keep me updated': 'yes',
+        'subscribe': 'yes',
+        'subscribe me': 'yes',
+        'please subscribe': 'yes',
+        'subscribe to updates': 'yes',
+        'no': 'no',
+        'no thanks': 'no',
+        'no thank you': 'no'
+      }
+      
+      const normalizedNewsletter = newsletterMapping[data.newsletter.toLowerCase()] || data.newsletter.toLowerCase()
+      formData.newsletter = normalizedNewsletter
       highlightedFields.newsletter = true
       fieldsUpdated++
-      console.log('Updated newsletter:', data.newsletter)
+      console.log('Updated newsletter:', normalizedNewsletter)
     }
   }
   
@@ -564,9 +666,33 @@ const mapDataToForm = (data) => {
   }
   
   if (data.productCategory) {
-    formData.productCategory = data.productCategory
+    // Normalize category to match dropdown values
+    const categoryMapping = {
+      'electronics': 'electronics',
+      'electronic': 'electronics',
+      'electronic devices': 'electronics',
+      'clothing': 'clothing',
+      'clothes': 'clothing',
+      'apparel': 'clothing',
+      'books': 'books',
+      'book': 'books',
+      'home': 'home',
+      'home & garden': 'home',
+      'sports': 'sports',
+      'sport': 'sports',
+      'sports & outdoors': 'sports',
+      'beauty': 'beauty',
+      'beauty & health': 'beauty',
+      'health': 'beauty',
+      'automotive': 'automotive',
+      'auto': 'automotive',
+      'car': 'automotive'
+    }
+    
+    const normalizedCategory = categoryMapping[data.productCategory.toLowerCase()] || data.productCategory.toLowerCase()
+    formData.productCategory = normalizedCategory
     highlightedFields.productCategory = true
-    console.log('Set productCategory:', data.productCategory)
+    console.log('Set productCategory:', normalizedCategory)
   }
   
   if (data.purchaseDate) {
@@ -576,9 +702,29 @@ const mapDataToForm = (data) => {
   }
   
   if (data.rating) {
-    formData.rating = data.rating
+    // Normalize rating to match dropdown values
+    const ratingMapping = {
+      '5 - excellent': '5',
+      '5 - very good': '5',
+      '5': '5',
+      '4 - very good': '4',
+      '4 - good': '4',
+      '4': '4',
+      '3 - good': '3',
+      '3 - average': '3',
+      '3': '3',
+      '2 - fair': '2',
+      '2 - poor': '2',
+      '2': '2',
+      '1 - poor': '1',
+      '1 - bad': '1',
+      '1': '1'
+    }
+    
+    const normalizedRating = ratingMapping[data.rating.toLowerCase()] || data.rating
+    formData.rating = normalizedRating
     highlightedFields.rating = true
-    console.log('Set rating:', data.rating)
+    console.log('Set rating:', normalizedRating)
   }
   
   if (data.feedback) {
@@ -588,15 +734,57 @@ const mapDataToForm = (data) => {
   }
   
   if (data.recommendation) {
-    formData.recommendation = data.recommendation
+    // Normalize recommendation to match dropdown values
+    const recommendationMapping = {
+      'yes': 'yes',
+      'yes definitely': 'yes',
+      'yes, definitely': 'yes',
+      'definitely': 'yes',
+      'absolutely': 'yes',
+      'maybe': 'maybe',
+      'perhaps': 'maybe',
+      'possibly': 'maybe',
+      'no': 'no',
+      'no probably not': 'no',
+      'no, probably not': 'no',
+      'probably not': 'no',
+      'definitely not': 'no'
+    }
+    
+    const normalizedRecommendation = recommendationMapping[data.recommendation.toLowerCase()] || data.recommendation.toLowerCase()
+    formData.recommendation = normalizedRecommendation
     highlightedFields.recommendation = true
-    console.log('Set recommendation:', data.recommendation)
+    console.log('Set recommendation:', normalizedRecommendation)
   }
   
   if (data.priceRange) {
-    formData.priceRange = data.priceRange
+    // Normalize price range to match dropdown values
+    const priceRangeMapping = {
+      'under $50': 'under-50',
+      'under 50': 'under-50',
+      'less than $50': 'under-50',
+      'fifty-four dollars': '50-100',
+      '54 dollars': '50-100',
+      '$54': '50-100',
+      'fifty four': '50-100',
+      '$50 - $100': '50-100',
+      '50 - 100': '50-100',
+      'fifty to one hundred': '50-100',
+      '$100 - $500': '100-500',
+      '100 - 500': '100-500',
+      'one hundred to five hundred': '100-500',
+      '$500 - $1,000': '500-1000',
+      '500 - 1000': '500-1000',
+      'five hundred to one thousand': '500-1000',
+      'over $1,000': 'over-1000',
+      'over 1000': 'over-1000',
+      'more than $1,000': 'over-1000'
+    }
+    
+    const normalizedPriceRange = priceRangeMapping[data.priceRange.toLowerCase()] || data.priceRange.toLowerCase()
+    formData.priceRange = normalizedPriceRange
     highlightedFields.priceRange = true
-    console.log('Set priceRange:', data.priceRange)
+    console.log('Set priceRange:', normalizedPriceRange)
   }
   
   if (data.improvements) {
@@ -614,9 +802,25 @@ const mapDataToForm = (data) => {
   }
   
   if (data.newsletter) {
-    formData.newsletter = data.newsletter
+    // Normalize newsletter to match dropdown values
+    const newsletterMapping = {
+      'yes': 'yes',
+      'yes keep me updated': 'yes',
+      'yes, keep me updated': 'yes',
+      'keep me updated': 'yes',
+      'subscribe': 'yes',
+      'subscribe me': 'yes',
+      'please subscribe': 'yes',
+      'subscribe to updates': 'yes',
+      'no': 'no',
+      'no thanks': 'no',
+      'no thank you': 'no'
+    }
+    
+    const normalizedNewsletter = newsletterMapping[data.newsletter.toLowerCase()] || data.newsletter.toLowerCase()
+    formData.newsletter = normalizedNewsletter
     highlightedFields.newsletter = true
-    console.log('Set newsletter:', data.newsletter)
+    console.log('Set newsletter:', normalizedNewsletter)
   }
   
   // Remove highlights after 3 seconds
