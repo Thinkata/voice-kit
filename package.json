@@ -1,6 +1,6 @@
 {
   "name": "@thinkata/voice-kit",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Complete voice-powered application toolkit - Speech-to-text, AI form filling, and serverless API handlers",
   "type": "module",
   "main": "./dist/index.js",

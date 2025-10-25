@@ -1,10 +1,10 @@
 <template>
   <div class="demo-page">
     <div class="hero-section">
-      <h1>Speech-to-Form Demo</h1>
+      <h1>Product Feedback Demo</h1>
       <p class="subtitle">
         Experience the power of voice-to-text with intelligent form pre-filling.
-        Speak naturally and watch as AI parses your speech into structured form data.
+        Speak naturally about a product and watch as AI parses your feedback into structured form data.
       </p>
     </div>
 
@@ -29,165 +29,170 @@
       <!-- Form Section -->
       <div class="form-section">
         <div class="form-card">
-          <h2>📝 Personal Information Form</h2>
+          <h2>📝 Product Feedback Form</h2>
           
           <form @submit.prevent="handleSubmit" class="sample-form">
-            <!-- Basic Information -->
+            <!-- Product Information -->
             <div class="form-section-header">
-              <h3>Basic Information</h3>
+              <h3>Product Information</h3>
             </div>
             
             <div class="form-row">
               <div class="form-group">
-                <label for="firstName">First Name *</label>
+                <label for="productName">Product Name *</label>
                 <input 
                   type="text" 
-                  id="firstName" 
-                  v-model="formData.firstName" 
+                  id="productName" 
+                  v-model="formData.productName" 
                   required
-                  :class="{ 'highlighted': highlightedFields.firstName, 'error': errors.firstName }"
+                  placeholder="e.g., iPhone 15, MacBook Pro"
+                  :class="{ 'highlighted': highlightedFields.productName, 'error': errors.productName }"
                 />
-                <span v-if="errors.firstName" class="error-message">{{ errors.firstName }}</span>
+                <span v-if="errors.productName" class="error-message">{{ errors.productName }}</span>
               </div>
 
               <div class="form-group">
-                <label for="lastName">Last Name *</label>
-                <input 
-                  type="text" 
-                  id="lastName" 
-                  v-model="formData.lastName" 
+                <label for="productCategory">Product Category *</label>
+                <select 
+                  id="productCategory" 
+                  v-model="formData.productCategory" 
                   required
-                  :class="{ 'highlighted': highlightedFields.lastName, 'error': errors.lastName }"
-                />
-                <span v-if="errors.lastName" class="error-message">{{ errors.lastName }}</span>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label for="email">Email *</label>
-                <input 
-                  type="email" 
-                  id="email" 
-                  v-model="formData.email" 
-                  required
-                  :class="{ 'highlighted': highlightedFields.email, 'error': errors.email }"
-                />
-                <span v-if="errors.email" class="error-message">{{ errors.email }}</span>
-              </div>
-
-              <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input 
-                  type="tel" 
-                  id="phone" 
-                  v-model="formData.phone"
-                  :class="{ 'highlighted': highlightedFields.phone, 'error': errors.phone }"
-                />
-                <span v-if="errors.phone" class="error-message">{{ errors.phone }}</span>
+                  :class="{ 'highlighted': highlightedFields.productCategory, 'error': errors.productCategory }"
+                >
+                  <option value="">Select Category...</option>
+                  <option value="electronics">Electronics</option>
+                  <option value="clothing">Clothing</option>
+                  <option value="books">Books</option>
+                  <option value="home">Home & Garden</option>
+                  <option value="sports">Sports & Outdoors</option>
+                  <option value="beauty">Beauty & Health</option>
+                  <option value="automotive">Automotive</option>
+                  <option value="other">Other</option>
+                </select>
+                <span v-if="errors.productCategory" class="error-message">{{ errors.productCategory }}</span>
               </div>
             </div>
 
             <div class="form-group">
-              <label for="dateOfBirth">Date of Birth</label>
+              <label for="purchaseDate">Purchase Date</label>
               <input 
                 type="date" 
-                id="dateOfBirth" 
-                v-model="formData.dateOfBirth"
-                :class="{ 'highlighted': highlightedFields.dateOfBirth, 'error': errors.dateOfBirth }"
+                id="purchaseDate" 
+                v-model="formData.purchaseDate"
+                :class="{ 'highlighted': highlightedFields.purchaseDate, 'error': errors.purchaseDate }"
               />
-              <span v-if="errors.dateOfBirth" class="error-message">{{ errors.dateOfBirth }}</span>
+              <span v-if="errors.purchaseDate" class="error-message">{{ errors.purchaseDate }}</span>
             </div>
 
-            <!-- Address Information -->
+            <!-- Feedback Information -->
             <div class="form-section-header">
-              <h3>Address</h3>
+              <h3>Your Feedback</h3>
             </div>
 
             <div class="form-group">
-              <label for="street">Street Address</label>
-              <input 
-                type="text" 
-                id="street" 
-                v-model="formData.address.street"
-                :class="{ 'highlighted': highlightedFields.street, 'error': errors.street }"
-              />
-              <span v-if="errors.street" class="error-message">{{ errors.street }}</span>
+              <label for="rating">Overall Rating *</label>
+              <select 
+                id="rating" 
+                v-model="formData.rating" 
+                required
+                :class="{ 'highlighted': highlightedFields.rating, 'error': errors.rating }"
+              >
+                <option value="">Select Rating...</option>
+                <option value="5">5 - Excellent</option>
+                <option value="4">4 - Very Good</option>
+                <option value="3">3 - Good</option>
+                <option value="2">2 - Fair</option>
+                <option value="1">1 - Poor</option>
+              </select>
+              <span v-if="errors.rating" class="error-message">{{ errors.rating }}</span>
+            </div>
+
+            <div class="form-group">
+              <label for="feedback">Detailed Feedback *</label>
+              <textarea 
+                id="feedback" 
+                v-model="formData.feedback" 
+                required
+                rows="4"
+                placeholder="Tell us about your experience with this product..."
+                :class="{ 'highlighted': highlightedFields.feedback, 'error': errors.feedback }"
+              ></textarea>
+              <span v-if="errors.feedback" class="error-message">{{ errors.feedback }}</span>
             </div>
 
             <div class="form-row">
               <div class="form-group">
-                <label for="city">City</label>
-                <input 
-                  type="text" 
-                  id="city" 
-                  v-model="formData.address.city"
-                  :class="{ 'highlighted': highlightedFields.city, 'error': errors.city }"
-                />
-                <span v-if="errors.city" class="error-message">{{ errors.city }}</span>
+                <label for="recommendation">Would you recommend this product?</label>
+                <select 
+                  id="recommendation" 
+                  v-model="formData.recommendation"
+                  :class="{ 'highlighted': highlightedFields.recommendation, 'error': errors.recommendation }"
+                >
+                  <option value="">Select...</option>
+                  <option value="yes">Yes, definitely</option>
+                  <option value="maybe">Maybe</option>
+                  <option value="no">No, probably not</option>
+                </select>
+                <span v-if="errors.recommendation" class="error-message">{{ errors.recommendation }}</span>
               </div>
 
               <div class="form-group">
-                <label for="state">State</label>
-                <input 
-                  type="text" 
-                  id="state" 
-                  v-model="formData.address.state"
-                  :class="{ 'highlighted': highlightedFields.state, 'error': errors.state }"
-                />
-                <span v-if="errors.state" class="error-message">{{ errors.state }}</span>
-              </div>
-
-              <div class="form-group">
-                <label for="zipCode">ZIP Code</label>
-                <input 
-                  type="text" 
-                  id="zipCode" 
-                  v-model="formData.address.zipCode"
-                  :class="{ 'highlighted': highlightedFields.zipCode, 'error': errors.zipCode }"
-                />
-                <span v-if="errors.zipCode" class="error-message">{{ errors.zipCode }}</span>
+                <label for="priceRange">Price Range</label>
+                <select 
+                  id="priceRange" 
+                  v-model="formData.priceRange"
+                  :class="{ 'highlighted': highlightedFields.priceRange, 'error': errors.priceRange }"
+                >
+                  <option value="">Select...</option>
+                  <option value="under-50">Under $50</option>
+                  <option value="50-100">$50 - $100</option>
+                  <option value="100-500">$100 - $500</option>
+                  <option value="500-1000">$500 - $1,000</option>
+                  <option value="over-1000">Over $1,000</option>
+                </select>
+                <span v-if="errors.priceRange" class="error-message">{{ errors.priceRange }}</span>
               </div>
             </div>
 
-            <!-- Preferences -->
+            <!-- Additional Information -->
             <div class="form-section-header">
-              <h3>Preferences</h3>
+              <h3>Additional Information</h3>
             </div>
 
             <div class="form-group">
-              <label for="occupation">Occupation</label>
+              <label for="improvements">Suggested Improvements</label>
+              <textarea 
+                id="improvements" 
+                v-model="formData.improvements"
+                rows="3"
+                placeholder="What would you like to see improved?"
+                :class="{ 'highlighted': highlightedFields.improvements, 'error': errors.improvements }"
+              ></textarea>
+              <span v-if="errors.improvements" class="error-message">{{ errors.improvements }}</span>
+            </div>
+
+            <div class="form-group">
+              <label for="tags">Product Tags (comma-separated)</label>
               <input 
                 type="text" 
-                id="occupation" 
-                v-model="formData.occupation"
-                :class="{ 'highlighted': highlightedFields.occupation, 'error': errors.occupation }"
+                id="tags" 
+                v-model="formData.tags"
+                placeholder="e.g., durable, lightweight, stylish, affordable"
+                :class="{ 'highlighted': highlightedFields.tags, 'error': errors.tags }"
               />
-              <span v-if="errors.occupation" class="error-message">{{ errors.occupation }}</span>
+              <span v-if="errors.tags" class="error-message">{{ errors.tags }}</span>
             </div>
 
             <div class="form-group">
-              <label for="interests">Interests (comma-separated)</label>
-              <input 
-                type="text" 
-                id="interests" 
-                v-model="formData.interests"
-                placeholder="e.g., hiking, photography, cooking"
-                :class="{ 'highlighted': highlightedFields.interests, 'error': errors.interests }"
-              />
-              <span v-if="errors.interests" class="error-message">{{ errors.interests }}</span>
-            </div>
-
-            <div class="form-group">
-              <label for="newsletter">Subscribe to Newsletter</label>
+              <label for="newsletter">Subscribe to Product Updates</label>
               <select 
                 id="newsletter" 
                 v-model="formData.newsletter"
                 :class="{ 'highlighted': highlightedFields.newsletter, 'error': errors.newsletter }"
               >
                 <option value="">Select...</option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
+                <option value="yes">Yes, keep me updated</option>
+                <option value="no">No, thanks</option>
               </select>
               <span v-if="errors.newsletter" class="error-message">{{ errors.newsletter }}</span>
             </div>
@@ -208,7 +213,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, watch } from 'vue'
 // VoiceInput component copied from @thinkata/voice-kit/dist/components/
 import VoiceInput from '~/components/VoiceInput.vue'
 
@@ -221,19 +226,15 @@ const isSubmitting = ref(false)
 
 // Form data structure
 const formData = reactive({
-  firstName: '',
-  lastName: '',
-  email: '',
-  phone: '',
-  dateOfBirth: '',
-  address: {
-    street: '',
-    city: '',
-    state: '',
-    zipCode: ''
-  },
-  occupation: '',
-  interests: '',
+  productName: '',
+  productCategory: '',
+  purchaseDate: '',
+  rating: '',
+  feedback: '',
+  recommendation: '',
+  priceRange: '',
+  improvements: '',
+  tags: '',
   newsletter: ''
 })
 
@@ -242,17 +243,15 @@ const errors = reactive({})
 
 // Highlighted fields (for visual feedback)
 const highlightedFields = reactive({
-  firstName: false,
-  lastName: false,
-  email: false,
-  phone: false,
-  dateOfBirth: false,
-  street: false,
-  city: false,
-  state: false,
-  zipCode: false,
-  occupation: false,
-  interests: false,
+  productName: false,
+  productCategory: false,
+  purchaseDate: false,
+  rating: false,
+  feedback: false,
+  recommendation: false,
+  priceRange: false,
+  improvements: false,
+  tags: false,
   newsletter: false
 })
 
@@ -410,64 +409,56 @@ const mergeDataToForm = (data) => {
   
   let fieldsUpdated = 0
   
-  // Dynamic field mapping based on detected form structure
+  // Map product feedback fields
+  const fieldMappings = {
+    'productName': 'productName',
+    'product': 'productName',
+    'name': 'productName',
+    'productCategory': 'productCategory',
+    'category': 'productCategory',
+    'purchaseDate': 'purchaseDate',
+    'date': 'purchaseDate',
+    'rating': 'rating',
+    'score': 'rating',
+    'feedback': 'feedback',
+    'review': 'feedback',
+    'comment': 'feedback',
+    'recommendation': 'recommendation',
+    'recommend': 'recommendation',
+    'priceRange': 'priceRange',
+    'price': 'priceRange',
+    'improvements': 'improvements',
+    'suggestions': 'improvements',
+    'tags': 'tags',
+    'keywords': 'tags',
+    'newsletter': 'newsletter'
+  }
+  
+  // Use detected form fields for dynamic mapping
   if (detectedFields.value && detectedFields.value.length > 0) {
-    // Map common address field names to nested structure
-    const addressMapping = {
-      'streetAddress': 'street',
-      'street': 'street',
-      'city': 'city',
-      'state': 'state',
-      'zipCode': 'zipCode',
-      'zip': 'zipCode',
-      'postalCode': 'zipCode'
-    }
-    
-    // Use detected form fields for dynamic mapping
     detectedFields.value.forEach(field => {
       const fieldName = field.name
       let fieldValue = data[fieldName]
       
-      // Handle nested address fields
-      if (!fieldValue && data.address) {
-        const mappedField = addressMapping[fieldName]
-        if (mappedField && data.address[mappedField]) {
-          fieldValue = data.address[mappedField]
+      // Try alternative field names if direct match not found
+      if (!fieldValue) {
+        const mappedField = fieldMappings[fieldName]
+        if (mappedField && data[mappedField]) {
+          fieldValue = data[mappedField]
         }
       }
       
       if (fieldValue !== undefined && fieldValue !== null) {
-        // Check if we should update this field (only if empty or new data is more complete)
-        let currentValue
-        let shouldUpdate = false
+        const currentValue = formData[fieldName]
+        const shouldUpdate = !currentValue || 
+                            (typeof fieldValue === 'string' && fieldValue.length > currentValue.length) ||
+                            (typeof fieldValue !== 'string')
         
-        // Handle nested address fields
-        if (['streetAddress', 'street', 'city', 'state', 'zipCode', 'zip', 'postalCode'].includes(fieldName)) {
-          const addressField = addressMapping[fieldName] || fieldName
-          currentValue = formData.address[addressField]
-          shouldUpdate = !currentValue || 
-                        (typeof fieldValue === 'string' && fieldValue.length > currentValue.length) ||
-                        (typeof fieldValue !== 'string')
-          
-          if (shouldUpdate) {
-            formData.address[addressField] = fieldValue
-            highlightedFields[addressField] = true
-            fieldsUpdated++
-            console.log(`Updated address.${addressField}:`, fieldValue)
-          }
-        } else {
-          // Handle top-level fields
-          currentValue = formData[fieldName]
-          shouldUpdate = !currentValue || 
-                        (typeof fieldValue === 'string' && fieldValue.length > currentValue.length) ||
-                        (typeof fieldValue !== 'string')
-          
-          if (shouldUpdate) {
-            formData[fieldName] = fieldValue
-            highlightedFields[fieldName] = true
-            fieldsUpdated++
-            console.log(`Updated ${fieldName}:`, fieldValue)
-          }
+        if (shouldUpdate) {
+          formData[fieldName] = fieldValue
+          highlightedFields[fieldName] = true
+          fieldsUpdated++
+          console.log(`Updated ${fieldName}:`, fieldValue)
         }
       }
     })
@@ -475,117 +466,70 @@ const mergeDataToForm = (data) => {
     // Fallback to hardcoded mapping for backward compatibility
     console.log('Using fallback hardcoded field mapping')
     
-    // Map basic information (only if field is empty or new data is more complete)
-    if (data.firstName && (!formData.firstName || data.firstName.length > formData.firstName.length)) {
-      formData.firstName = data.firstName
-      highlightedFields.firstName = true
+    // Map product information
+    if (data.productName && (!formData.productName || data.productName.length > formData.productName.length)) {
+      formData.productName = data.productName
+      highlightedFields.productName = true
       fieldsUpdated++
-      console.log('Updated firstName:', data.firstName)
+      console.log('Updated productName:', data.productName)
     }
     
-    if (data.lastName && (!formData.lastName || data.lastName.length > formData.lastName.length)) {
-      formData.lastName = data.lastName
-      highlightedFields.lastName = true
+    if (data.productCategory && (!formData.productCategory || data.productCategory.length > formData.productCategory.length)) {
+      formData.productCategory = data.productCategory
+      highlightedFields.productCategory = true
       fieldsUpdated++
-      console.log('Updated lastName:', data.lastName)
+      console.log('Updated productCategory:', data.productCategory)
     }
     
-    if (data.email && (!formData.email || data.email.length > formData.email.length)) {
-      formData.email = data.email
-      highlightedFields.email = true
+    if (data.purchaseDate && (!formData.purchaseDate || data.purchaseDate.length > formData.purchaseDate.length)) {
+      formData.purchaseDate = data.purchaseDate
+      highlightedFields.purchaseDate = true
       fieldsUpdated++
-      console.log('Updated email:', data.email)
+      console.log('Updated purchaseDate:', data.purchaseDate)
     }
     
-    if (data.phone && (!formData.phone || data.phone.length > formData.phone.length)) {
-      formData.phone = data.phone
-      highlightedFields.phone = true
+    if (data.rating && (!formData.rating || data.rating.length > formData.rating.length)) {
+      formData.rating = data.rating
+      highlightedFields.rating = true
       fieldsUpdated++
-      console.log('Updated phone:', data.phone)
+      console.log('Updated rating:', data.rating)
     }
     
-    if (data.dateOfBirth && (!formData.dateOfBirth || data.dateOfBirth.length > formData.dateOfBirth.length)) {
-      formData.dateOfBirth = data.dateOfBirth
-      highlightedFields.dateOfBirth = true
+    if (data.feedback && (!formData.feedback || data.feedback.length > formData.feedback.length)) {
+      formData.feedback = data.feedback
+      highlightedFields.feedback = true
       fieldsUpdated++
-      console.log('Updated dateOfBirth:', data.dateOfBirth)
+      console.log('Updated feedback:', data.feedback)
     }
     
-    // Handle address fields - both nested and flattened structures
-    if (data.address) {
-      // Handle nested address structure
-      if (data.address.street && (!formData.address.street || data.address.street.length > formData.address.street.length)) {
-        formData.address.street = data.address.street
-        highlightedFields.street = true
-        fieldsUpdated++
-        console.log('Updated address.street:', data.address.street)
-      }
-      
-      if (data.address.city && (!formData.address.city || data.address.city.length > formData.address.city.length)) {
-        formData.address.city = data.address.city
-        highlightedFields.city = true
-        fieldsUpdated++
-        console.log('Updated address.city:', data.address.city)
-      }
-      
-      if (data.address.state && (!formData.address.state || data.address.state.length > formData.address.state.length)) {
-        formData.address.state = data.address.state
-        highlightedFields.state = true
-        fieldsUpdated++
-        console.log('Updated address.state:', data.address.state)
-      }
-      
-      if (data.address.zipCode && (!formData.address.zipCode || data.address.zipCode.length > formData.address.zipCode.length)) {
-        formData.address.zipCode = data.address.zipCode
-        highlightedFields.zipCode = true
-        fieldsUpdated++
-        console.log('Updated address.zipCode:', data.address.zipCode)
-      }
-    } else {
-      // Handle flattened address structure (when LLM returns individual address fields)
-      if (data.street && (!formData.address.street || data.street.length > formData.address.street.length)) {
-        formData.address.street = data.street
-        highlightedFields.street = true
-        fieldsUpdated++
-        console.log('Updated street:', data.street)
-      }
-      
-      if (data.city && (!formData.address.city || data.city.length > formData.address.city.length)) {
-        formData.address.city = data.city
-        highlightedFields.city = true
-        fieldsUpdated++
-        console.log('Updated city:', data.city)
-      }
-      
-      if (data.state && (!formData.address.state || data.state.length > formData.address.state.length)) {
-        formData.address.state = data.state
-        highlightedFields.state = true
-        fieldsUpdated++
-        console.log('Updated state:', data.state)
-      }
-      
-      if (data.zipCode && (!formData.address.zipCode || data.zipCode.length > formData.address.zipCode.length)) {
-        formData.address.zipCode = data.zipCode
-        highlightedFields.zipCode = true
-        fieldsUpdated++
-        console.log('Updated zipCode:', data.zipCode)
-      }
-    }
-    
-    if (data.occupation && (!formData.occupation || data.occupation.length > formData.occupation.length)) {
-      formData.occupation = data.occupation
-      highlightedFields.occupation = true
+    if (data.recommendation && (!formData.recommendation || data.recommendation.length > formData.recommendation.length)) {
+      formData.recommendation = data.recommendation
+      highlightedFields.recommendation = true
       fieldsUpdated++
-      console.log('Updated occupation:', data.occupation)
+      console.log('Updated recommendation:', data.recommendation)
     }
     
-    if (data.interests) {
-      const newInterests = Array.isArray(data.interests) ? data.interests.join(', ') : data.interests
-      if (!formData.interests || newInterests.length > formData.interests.length) {
-        formData.interests = newInterests
-        highlightedFields.interests = true
+    if (data.priceRange && (!formData.priceRange || data.priceRange.length > formData.priceRange.length)) {
+      formData.priceRange = data.priceRange
+      highlightedFields.priceRange = true
+      fieldsUpdated++
+      console.log('Updated priceRange:', data.priceRange)
+    }
+    
+    if (data.improvements && (!formData.improvements || data.improvements.length > formData.improvements.length)) {
+      formData.improvements = data.improvements
+      highlightedFields.improvements = true
+      fieldsUpdated++
+      console.log('Updated improvements:', data.improvements)
+    }
+    
+    if (data.tags) {
+      const newTags = Array.isArray(data.tags) ? data.tags.join(', ') : data.tags
+      if (!formData.tags || newTags.length > formData.tags.length) {
+        formData.tags = newTags
+        highlightedFields.tags = true
         fieldsUpdated++
-        console.log('Updated interests:', newInterests)
+        console.log('Updated tags:', newTags)
       }
     }
     
@@ -612,102 +556,67 @@ const mapDataToForm = (data) => {
   // Clear previous highlights
   clearHighlights()
   
-  // Map basic information
-  if (data.firstName) {
-    formData.firstName = data.firstName
-    highlightedFields.firstName = true
-    console.log('Set firstName:', data.firstName)
+  // Map product information
+  if (data.productName) {
+    formData.productName = data.productName
+    highlightedFields.productName = true
+    console.log('Set productName:', data.productName)
   }
   
-  if (data.lastName) {
-    formData.lastName = data.lastName
-    highlightedFields.lastName = true
+  if (data.productCategory) {
+    formData.productCategory = data.productCategory
+    highlightedFields.productCategory = true
+    console.log('Set productCategory:', data.productCategory)
   }
   
-  if (data.email) {
-    formData.email = data.email
-    highlightedFields.email = true
+  if (data.purchaseDate) {
+    formData.purchaseDate = data.purchaseDate
+    highlightedFields.purchaseDate = true
+    console.log('Set purchaseDate:', data.purchaseDate)
   }
   
-  if (data.phone) {
-    formData.phone = data.phone
-    highlightedFields.phone = true
+  if (data.rating) {
+    formData.rating = data.rating
+    highlightedFields.rating = true
+    console.log('Set rating:', data.rating)
   }
   
-  if (data.dateOfBirth) {
-    formData.dateOfBirth = data.dateOfBirth
-    highlightedFields.dateOfBirth = true
+  if (data.feedback) {
+    formData.feedback = data.feedback
+    highlightedFields.feedback = true
+    console.log('Set feedback:', data.feedback)
   }
   
-  // Map address information - handle both nested and flattened structures
-  if (data.address) {
-    // Handle nested address structure
-    if (data.address.street) {
-      formData.address.street = data.address.street
-      highlightedFields.street = true
-      console.log('Set address.street:', data.address.street)
-    }
-    
-    if (data.address.city) {
-      formData.address.city = data.address.city
-      highlightedFields.city = true
-      console.log('Set address.city:', data.address.city)
-    }
-    
-    if (data.address.state) {
-      formData.address.state = data.address.state
-      highlightedFields.state = true
-      console.log('Set address.state:', data.address.state)
-    }
-    
-    if (data.address.zipCode) {
-      formData.address.zipCode = data.address.zipCode
-      highlightedFields.zipCode = true
-      console.log('Set address.zipCode:', data.address.zipCode)
-    }
-  } else {
-    // Handle flattened address structure (when LLM returns individual address fields)
-    if (data.street) {
-      formData.address.street = data.street
-      highlightedFields.street = true
-      console.log('Set street:', data.street)
-    }
-    
-    if (data.city) {
-      formData.address.city = data.city
-      highlightedFields.city = true
-      console.log('Set city:', data.city)
-    }
-    
-    if (data.state) {
-      formData.address.state = data.state
-      highlightedFields.state = true
-      console.log('Set state:', data.state)
-    }
-    
-    if (data.zipCode) {
-      formData.address.zipCode = data.zipCode
-      highlightedFields.zipCode = true
-      console.log('Set zipCode:', data.zipCode)
-    }
+  if (data.recommendation) {
+    formData.recommendation = data.recommendation
+    highlightedFields.recommendation = true
+    console.log('Set recommendation:', data.recommendation)
   }
   
-  // Map preferences
-  if (data.occupation) {
-    formData.occupation = data.occupation
-    highlightedFields.occupation = true
+  if (data.priceRange) {
+    formData.priceRange = data.priceRange
+    highlightedFields.priceRange = true
+    console.log('Set priceRange:', data.priceRange)
   }
   
-  if (data.interests) {
-    formData.interests = Array.isArray(data.interests) 
-      ? data.interests.join(', ') 
-      : data.interests
-    highlightedFields.interests = true
+  if (data.improvements) {
+    formData.improvements = data.improvements
+    highlightedFields.improvements = true
+    console.log('Set improvements:', data.improvements)
+  }
+  
+  if (data.tags) {
+    formData.tags = Array.isArray(data.tags) 
+      ? data.tags.join(', ') 
+      : data.tags
+    highlightedFields.tags = true
+    console.log('Set tags:', data.tags)
   }
   
   if (data.newsletter) {
     formData.newsletter = data.newsletter
     highlightedFields.newsletter = true
+    console.log('Set newsletter:', data.newsletter)
   }
   
   // Remove highlights after 3 seconds
@@ -717,15 +626,15 @@ const mapDataToForm = (data) => {
 }
 
 // Validation functions
-const validateEmail = (email) => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  return emailRegex.test(email)
+const validateRating = (rating) => {
+  const validRatings = ['1', '2', '3', '4', '5']
+  return validRatings.includes(rating)
 }
 
-const validatePhone = (phone) => {
-  if (!phone) return true
-  const phoneRegex = /^\+?1?[-.\s]?\(?[0-9]{3}\)?[-.\s]?[0-9]{3}[-.\s]?[0-9]{4}$/
-  return phoneRegex.test(phone)
+const validateDate = (date) => {
+  if (!date) return true
+  const dateObj = new Date(date)
+  return !isNaN(dateObj.getTime()) && dateObj <= new Date()
 }
 
 const validateForm = () => {
@@ -733,36 +642,33 @@ const validateForm = () => {
   let isValid = true
   
   // Required fields
-  if (!formData.firstName.trim()) {
-    setError('firstName', 'First name is required')
+  if (!formData.productName.trim()) {
+    setError('productName', 'Product name is required')
     isValid = false
   }
   
-  if (!formData.lastName.trim()) {
-    setError('lastName', 'Last name is required')
+  if (!formData.productCategory.trim()) {
+    setError('productCategory', 'Product category is required')
     isValid = false
   }
   
-  if (!formData.email.trim()) {
-    setError('email', 'Email is required')
+  if (!formData.rating.trim()) {
+    setError('rating', 'Rating is required')
     isValid = false
-  } else if (!validateEmail(formData.email)) {
-    setError('email', 'Invalid email format')
+  } else if (!validateRating(formData.rating)) {
+    setError('rating', 'Please select a valid rating')
+    isValid = false
+  }
+  
+  if (!formData.feedback.trim()) {
+    setError('feedback', 'Feedback is required')
     isValid = false
   }
   
   // Optional field validation
-  if (formData.phone && !validatePhone(formData.phone)) {
-    setError('phone', 'Invalid phone number format')
+  if (formData.purchaseDate && !validateDate(formData.purchaseDate)) {
+    setError('purchaseDate', 'Invalid date')
     isValid = false
-  }
-  
-  if (formData.dateOfBirth) {
-    const date = new Date(formData.dateOfBirth)
-    if (isNaN(date.getTime()) || date > new Date()) {
-      setError('dateOfBirth', 'Invalid date')
-      isValid = false
-    }
   }
   
   return isValid
@@ -811,16 +717,9 @@ const handleSubmit = async () => {
 // Clear form
 const clearForm = () => {
   Object.keys(formData).forEach(key => {
-    if (typeof formData[key] === 'object') {
-      Object.keys(formData[key]).forEach(subKey => {
-        formData[key][subKey] = ''
-      })
-    } else {
-      formData[key] = ''
-    }
+    formData[key] = ''
   })
   
-  parsedData.value = null
   clearErrors()
   clearHighlights()
 }

@@ -5,7 +5,7 @@
 [![npm version](https://badge.fury.io/js/%40thinkata%2Fvoice-kit.svg)](https://www.npmjs.com/package/@thinkata/voice-kit)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**Version**: 0.0.3
+**Version**: 0.0.4
 
 ## Overview
 
@@ -17,6 +17,10 @@ Voice Kit is an all-in-one solution for building voice-powered web applications.
 - **Components** - Ready-to-use Vue components for voice input
 
 All in a single, easy-to-install package!
+
+## ⚠️ Important Notice
+
+**This version of Voice Kit is NOT suitable for PII (Personally Identifiable Information) workflows.** The example applications and default configurations are designed for non-sensitive use cases such as product feedback, surveys, and general data collection. For applications handling PII, additional security measures, data encryption, and compliance considerations are required.
 
 ## Features
 
@@ -45,9 +49,9 @@ import VoiceInput from '@thinkata/voice-kit/components/VoiceInput.vue'
 import { reactive } from 'vue'
 
 const formData = reactive({
-  name: '',
-  email: '',
-  message: ''
+  productName: '',
+  rating: '',
+  feedback: ''
 })
 
 const handleTranscript = async (transcript) => {
@@ -57,7 +61,7 @@ const handleTranscript = async (transcript) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ 
       text: transcript,
-      formStructure: { fields: ['name', 'email', 'message'] }
+      formStructure: { fields: ['productName', 'rating', 'feedback'] }
     })
   })
   
@@ -74,9 +78,16 @@ const handleTranscript = async (transcript) => {
     />
     
     <form>
-      <input v-model="formData.name" placeholder="Name" />
-      <input v-model="formData.email" placeholder="Email" />
-      <textarea v-model="formData.message" placeholder="Message" />
+      <input v-model="formData.productName" placeholder="Product Name" />
+      <select v-model="formData.rating">
+        <option value="">Select Rating</option>
+        <option value="5">5 - Excellent</option>
+        <option value="4">4 - Very Good</option>
+        <option value="3">3 - Good</option>
+        <option value="2">2 - Fair</option>
+        <option value="1">1 - Poor</option>
+      </select>
+      <textarea v-model="formData.feedback" placeholder="Your feedback..." />
       <button>Submit</button>
     </form>
   </div>
@@ -302,7 +313,7 @@ Creates h3 handler for checking LLM availability.
 
 ## Examples
 
-See the [examples/formfiller](./examples/formfiller) directory for a complete working example.
+See the [examples/formfiller](./examples/formfiller) directory for a complete working example of a **Product Feedback Form** - a non-PII use case demonstrating voice-powered form filling for product reviews and feedback collection.
 
 ## Contributing
 
